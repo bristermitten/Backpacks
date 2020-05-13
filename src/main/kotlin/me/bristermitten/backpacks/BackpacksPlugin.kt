@@ -25,7 +25,6 @@ class BackpacksPlugin : JavaPlugin()
 
     override fun onEnable()
     {
-
         val backpacksDirectory = dataFolder.resolve("backpacks")
         backpacksDirectory.mkdirs()
 
@@ -42,7 +41,6 @@ class BackpacksPlugin : JavaPlugin()
 
         registerCommands()
         registerEvents()
-
     }
 
     private fun registerEvents()
