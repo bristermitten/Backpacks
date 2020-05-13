@@ -19,13 +19,12 @@ jobs:
         run: chmod +x gradlew
       - name: Build Docs with Gradle
         run: ./gradlew dokkaJavadoc
-      - uses: crazy-max/ghaction-github-pages@v2.0.0
+      - uses: peaceiris/actions-gh-pages@v3
         with:
-          keep_history: true
+          keep_files: true
           allow_empty_commit: true
-          build_dir: build/docs/javadoc/-backpacks
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          public_dir: ./build/docs/javadoc/-backpacks
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to Nexus
         run: gradle publish
         env:
