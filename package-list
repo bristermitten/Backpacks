@@ -1,0 +1,16 @@
+$dokka.format:gfm
+$dokka.linkExtension:md
+$dokka.location:me.bristermitten.backpacks.utils$color(kotlin.String)me.bristermitten.backpacks.utils/kotlin.-string/color.md
+$dokka.location:me.bristermitten.backpacks.utils$firstNotFullBackpack(org.bukkit.inventory.Inventory)me.bristermitten.backpacks.utils/org.bukkit.inventory.-inventory/first-not-full-backpack.md
+$dokka.location:me.bristermitten.backpacks.utils$firstNotFullBackpackSlot(org.bukkit.inventory.Inventory)me.bristermitten.backpacks.utils/org.bukkit.inventory.-inventory/first-not-full-backpack-slot.md
+$dokka.location:me.bristermitten.backpacks.utils$getBackpackUUID(org.bukkit.inventory.ItemStack)me.bristermitten.backpacks.utils/org.bukkit.inventory.-item-stack/get-backpack-u-u-i-d.md
+$dokka.location:me.bristermitten.backpacks.utils$isBackpack(org.bukkit.inventory.ItemStack)me.bristermitten.backpacks.utils/org.bukkit.inventory.-item-stack/is-backpack.md
+$dokka.location:me.bristermitten.backpacks.utils$truncated(kotlin.Double)me.bristermitten.backpacks.utils/kotlin.-double/truncated.md
+me.bristermitten.backpacks
+me.bristermitten.backpacks.api
+me.bristermitten.backpacks.commands
+me.bristermitten.backpacks.entity
+me.bristermitten.backpacks.entity.format
+me.bristermitten.backpacks.event
+me.bristermitten.backpacks.persistence
+me.bristermitten.backpacks.utils
