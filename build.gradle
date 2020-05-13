@@ -1,0 +1,68 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'kr.entree.spigradle' version '1.2.1'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.3.72'
+}
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    bungeecord()
+    jitpack()
+    codemc()
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+}
+
+dependencies {
+    compileOnly spigot('1.15.2-R0.1-SNAPSHOT')
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-cbor:0.20.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'com.charleskorn.kaml:kaml:0.17.0'
+    implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.3.1'
+
+    testImplementation 'junit:junit:4.12'
+    testCompileOnly spigot('1.15.2-R0.1-SNAPSHOT')
+    testImplementation('com.github.knightzmc:MockBukkit:ecaf5f7462bbd18869d3198c1ced6766eeae93e0') {
+        exclude group: 'org.spigotmc'
+    }
+}
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+shadowJar {
+    minimize()
+    relocate 'kotlin', 'me.bristermitten.backpacks.libs.kotlin'
+    relocate 'kotlinx', 'me.bristermitten.backpacks.libs.kotlinx'
+    relocate 'co.aikar.commands', 'me.bristermitten.backpacks.libs.acf'
+    relocate 'co.aikar.locales', 'me.bristermitten.backpacks.libs.acf-locales'
+}
+
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.javaParameters = true
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+spigot {
+    apiVersion '1.15'
+    authors = ['BristerMitten']
+    description 'A Simple and Effective Backpacks plugin'
+    website 'https://bristermitten.me'
+}
