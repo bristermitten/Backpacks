@@ -29,11 +29,8 @@ internal data class BackpackEntity(
         {
             return false
         }
-        if (items.size == 1) //Optimization
-        {
-            return this.items.add(items.first())
-        }
-        return this.items.addAll(items)
+        val canFit = size - filled
+        return this.items.addAll(items.take(canFit))
     }
 
     override fun addItems(vararg items: ItemStack): Boolean
@@ -66,7 +63,6 @@ internal data class BackpackEntity(
         return addItems(true, items)
     }
 
-
     override fun isFull() = filled >= size
 
     override fun clear() = items.clear()
@@ -75,5 +71,4 @@ internal data class BackpackEntity(
     {
         return "Backpack(size=$size, uuid=$uuid, items=$items)"
     }
-
 }
