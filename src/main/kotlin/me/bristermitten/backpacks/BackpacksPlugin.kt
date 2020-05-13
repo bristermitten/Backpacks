@@ -64,5 +64,4 @@ class BackpacksPlugin : JavaPlugin()
     {
         backpacksLoader.save()
     }
-
 }
