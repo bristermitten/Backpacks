@@ -1,0 +1,7 @@
+backpack-item:
+  type: CHEST
+  name: "&aBackpack"
+  lore:
+    - "&7Max Size: &a{max-size}"
+    - "&7Slots Filled: &a{current-size}"
+    - "&7Filled: &a{filled-percentage}%"
