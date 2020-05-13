@@ -70,7 +70,6 @@ spigot {
     website 'https://bristermitten.me'
 }
 
-
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputFormat = 'gfm'
     outputDirectory = javadoc.destinationDir

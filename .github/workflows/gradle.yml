@@ -24,4 +24,9 @@ jobs:
           keep_history: true
           allow_empty_commit: true
           build_dir: build/docs/javadoc/-backpacks
-        
+      - name: Publish to Nexus
+        run: gradle publish
+        env:
+          MAVEN_USER: deploy
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+
