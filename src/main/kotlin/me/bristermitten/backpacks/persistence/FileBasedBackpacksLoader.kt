@@ -2,6 +2,7 @@ package me.bristermitten.backpacks.persistence
 
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.cbor.Cbor
+import kotlinx.serialization.json.Json
 import me.bristermitten.backpacks.api.Backpack
 import me.bristermitten.backpacks.api.Backpacks
 import me.bristermitten.backpacks.entity.BackpackEntity
@@ -9,6 +10,11 @@ import java.io.File
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
+/**
+ * Main implementation of [BackpacksLoader].
+ *
+ * This uses [Cbor] combined with GZIP for concise data storage.
+ */
 class FileBasedBackpacksLoader(
         private val backpacks: Backpacks,
         private val backpacksDirectory: File

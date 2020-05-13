@@ -6,6 +6,9 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockPlaceEvent
 
+/**
+ * Ensures that Backpack items are not placed.
+ */
 class BackpackPlaceListener : Listener
 {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)

@@ -7,6 +7,11 @@ import org.bukkit.util.io.BukkitObjectOutputStream
 import java.io.ByteArrayOutputStream
 import java.util.*
 
+/**
+ * KotlinX Serializer for an [ItemStack].
+ *
+ * This serializes an ItemStack using [BukkitObjectOutputStream] and encodes the data to Base64.
+ */
 object ItemStackSerializer : KSerializer<ItemStack>
 {
     override val descriptor = PrimitiveDescriptor("ItemStack", PrimitiveKind.STRING)

@@ -7,6 +7,9 @@ import me.bristermitten.backpacks.utils.isBackpack
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
+/**
+ * Main implementation of [Backpacks]
+ */
 internal class BackpackStore : Backpacks
 {
     private val allBackpacks = mutableMapOf<UUID, Backpack>()
@@ -40,4 +43,9 @@ internal class BackpackStore : Backpacks
     }
 
     override fun get(id: UUID): Backpack? = getBackpackById(id)
+
+    override fun remove(backpack: Backpack)
+    {
+        allBackpacks.remove(backpack.uuid, backpack)
+    }
 }

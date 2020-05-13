@@ -3,6 +3,11 @@ package me.bristermitten.backpacks.persistence
 import kotlinx.serialization.*
 import java.util.*
 
+/**
+ * KotlinX Serializer for [UUID]
+ *
+ * The [UUID] is encoded as its String representation.
+ */
 @Serializer(forClass = UUID::class)
 object UUIDSerializer : KSerializer<UUID>
 {

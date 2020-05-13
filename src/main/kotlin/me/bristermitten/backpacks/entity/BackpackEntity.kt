@@ -6,6 +6,9 @@ import me.bristermitten.backpacks.persistence.UUIDSerializer
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
+/**
+ * Main implementation of [Backpack]
+ */
 @Serializable
 internal data class BackpackEntity(
         override var size: Int,
@@ -29,7 +32,7 @@ internal data class BackpackEntity(
         {
             return false
         }
-        val canFit = size - filled
+        val canFit = (size - filled).coerceAtLeast(0)
         return this.items.addAll(items.take(canFit))
     }
 

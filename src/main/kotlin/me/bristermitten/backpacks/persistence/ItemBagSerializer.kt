@@ -6,6 +6,11 @@ import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.list
 import me.bristermitten.backpacks.entity.ItemBag
 
+/**
+ * KotlinX serializer for an [ItemBag].
+ *
+ * This serializes an [ItemBag] as a Map<Material, List<ItemStack>>
+ */
 @Serializer(forClass = ItemBag::class)
 object ItemBagSerializer : KSerializer<ItemBag>
 {

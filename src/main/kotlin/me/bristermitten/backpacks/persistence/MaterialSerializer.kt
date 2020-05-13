@@ -3,6 +3,11 @@ package me.bristermitten.backpacks.persistence
 import kotlinx.serialization.*
 import org.bukkit.Material
 
+/**
+ * KotlinX Serializer for [Material].
+ *
+ * (JetBrains, default enum serializers when?)
+ */
 object MaterialSerializer : KSerializer<Material>
 {
     override val descriptor: SerialDescriptor = PrimitiveDescriptor("Material", PrimitiveKind.STRING)

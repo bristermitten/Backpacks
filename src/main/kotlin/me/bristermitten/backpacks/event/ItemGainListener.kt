@@ -9,6 +9,9 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 
+/**
+ * Updates players' Backpacks if they mine a block and their inventory is full.
+ */
 class ItemGainListener(
         private val backpackFormatter: BackpackFormatter,
         private val backpacks: Backpacks

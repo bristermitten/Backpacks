@@ -18,12 +18,16 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * Main Command handler for Backpacks.
+ */
 @CommandAlias("backpacks|backpack")
 class BackpacksCommand(
         private val backpacks: Backpacks,
         private val backpackFormatter: BackpackFormatter
 ) : BaseCommand()
 {
+
     @Default
     @HelpCommand
     fun showHelp(help: CommandHelp)
@@ -31,12 +35,11 @@ class BackpacksCommand(
         help.showHelp()
     }
 
-
     @Subcommand("give")
     @Description("Give a player a backpack")
     @CommandPermission("backpacks.give")
     @CommandCompletion("@players")
-    fun giveBackpack(sender: CommandSender, target: OnlinePlayer, @Optional size: Int?)
+    fun giveBackpack(sender: CommandSender, target: OnlinePlayer, @Optional @Conditions("unsigned") size: Int?)
     {
         val backpack = if (size == null)
         {
@@ -54,7 +57,7 @@ class BackpacksCommand(
     @Subcommand("set")
     @Description("Set a backpack's size")
     @CommandPermission("backpacks.set")
-    fun setBackpackSize(sender: Player, size: Int)
+    fun setBackpackSize(sender: Player, @Conditions("unsigned") size: Int)
     {
         val hand = sender.inventory.itemInMainHand
         if (!hand.isBackpack())

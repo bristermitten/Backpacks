@@ -15,6 +15,7 @@ interface Backpack
 
     /**
      * The Maximum Size of the Backpack.
+     *
      * The implementation has no obligation to respect this. For example, [Backpack.forceAddItems] will override this limit,
      * and in the default implementation lowering [size] will not remove any overflowing items.
      */
@@ -22,6 +23,7 @@ interface Backpack
 
     /**
      * The amount of items that the backpack contains.
+     *
      * In the default implementation retrieving this is O(n), due to the use of a Multimap.
      * This is defined as the amount of individual items, not the amount of item types.
      * So 30 Stone and 2 Grass will result in the size 32, not 2.

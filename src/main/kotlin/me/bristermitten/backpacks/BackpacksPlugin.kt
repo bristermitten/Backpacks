@@ -1,5 +1,6 @@
 package me.bristermitten.backpacks
 
+import co.aikar.commands.ConditionFailedException
 import co.aikar.commands.PaperCommandManager
 import com.charleskorn.kaml.Yaml
 import me.bristermitten.backpacks.api.BackpackFormatter
@@ -15,6 +16,9 @@ import me.bristermitten.backpacks.persistence.FileBasedBackpacksLoader
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The Main class of Backpacks.
+ */
 class BackpacksPlugin : JavaPlugin()
 {
     val backpacks: Backpacks = BackpackStore()
@@ -55,6 +59,12 @@ class BackpacksPlugin : JavaPlugin()
         val commandManager = PaperCommandManager(this)
         @Suppress("DEPRECATION")
         commandManager.enableUnstableAPI("help")
+        commandManager.commandConditions.addCondition(Int::class.java, "unsigned") { _, _, value ->
+            if (value < 0)
+            {
+                throw ConditionFailedException("Value must be more than 0!")
+            }
+        }
         commandManager.registerCommand(BackpacksCommand(backpacks, backpackFormatter))
     }
 
