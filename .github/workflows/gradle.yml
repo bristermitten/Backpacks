@@ -23,7 +23,7 @@ jobs:
         with:
           keep_files: true
           allow_empty_commit: true
-          public_dir: ./build/docs/javadoc/-backpacks
+          publish_dir: ./build/docs/javadoc/-backpacks
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to Nexus
         run: gradle publish
