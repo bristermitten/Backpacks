@@ -46,15 +46,44 @@ interface Backpack
      */
     fun isFull(): Boolean
 
+    /**
+     * Add items to this Backpack.
+     * This will only add items that will fit.
+     * If 2 slots are free, then only the first 2 items will be added.
+     */
     fun addItems(vararg items: ItemStack): Boolean
+
+    /**
+     * Add items to this Backpack as a List.
+     * @see [Backpack.addItems]
+     */
     fun addItems(items: List<ItemStack>): Boolean
 
+    /**
+     * Add items to this Backpack.
+     * This function does not respect the Backpack's size.
+     */
     fun forceAddItems(vararg items: ItemStack): Boolean
+
+    /**
+     * Add items to this Backpack as a List.
+     * @see [Backpack.forceAddItems]
+     */
     fun forceAddItems(items: List<ItemStack>): Boolean
 
+    /**
+     * Remove items from this Backpack.
+     */
     fun removeItems(vararg items: ItemStack)
+
+    /**
+     * Remove items from this Backpack.
+     */
     fun removeItems(items: List<ItemStack>)
 
+    /**
+     * Clear this Backpack, removing all of the items.
+     */
     fun clear()
 
 }
