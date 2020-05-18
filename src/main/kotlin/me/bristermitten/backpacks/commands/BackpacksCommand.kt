@@ -4,19 +4,13 @@ import co.aikar.commands.BaseCommand
 import co.aikar.commands.CommandHelp
 import co.aikar.commands.annotation.*
 import co.aikar.commands.bukkit.contexts.OnlinePlayer
-import com.google.common.collect.Iterators
-import me.bristermitten.backpacks.BackpacksPlugin
 import me.bristermitten.backpacks.api.BackpackFormatter
 import me.bristermitten.backpacks.api.Backpacks
 import me.bristermitten.backpacks.utils.color
 import me.bristermitten.backpacks.utils.getBackpackUUID
 import me.bristermitten.backpacks.utils.isBackpack
-import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * Main Command handler for Backpacks.

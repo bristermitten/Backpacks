@@ -8,7 +8,6 @@ import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import java.lang.IllegalArgumentException
 import java.util.*
 
 /**
@@ -16,9 +15,10 @@ import java.util.*
  *
  * Internally, this uses an NBT tag check.
  */
-fun ItemStack.isBackpack(): Boolean
+fun ItemStack?.isBackpack(): Boolean
 {
-    if (type == Material.AIR) return false
+    if (this == null) return false
+    if (type.isAir) return false
     return NBTItem(this).hasKey(SimpleBackpackFormatter.NBT_BACKPACK_TAG)
 }
 
