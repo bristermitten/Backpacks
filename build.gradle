@@ -71,7 +71,7 @@ spigot {
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'gfm'
+    outputFormat = 'javadoc'
     outputDirectory = javadoc.destinationDir
     inputs.dir 'src/main/kotlin'
 }
