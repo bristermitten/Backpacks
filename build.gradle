@@ -14,6 +14,8 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 repositories {
+    mavenCentral()
+    mavenLocal()
     bungeecord()
     jitpack()
     jcenter()
@@ -37,6 +39,10 @@ dependencies {
 
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
     implementation 'de.tr7zw:item-nbt-api-plugin:2.5.0'
+
+    implementation "me.mattstudios.utils:matt-framework-gui:2.0.2"
+    //Source: https://github.com/knightzmc/mf-gui-kotlin
+    implementation "me.bristermitten:mf-gui-kotlin:1.0-SNAPSHOT"
 
     compileOnly 'me.clip:placeholderapi:2.10.9'
 

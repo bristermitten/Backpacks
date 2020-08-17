@@ -14,7 +14,7 @@ import me.bristermitten.backpacks.event.ItemGainListener
 import me.bristermitten.backpacks.lang.LangService
 import me.bristermitten.backpacks.lang.MessageColorFormatter
 import me.bristermitten.backpacks.lang.MessageFormatter
-import me.bristermitten.backpacks.lang.PAPIHook
+import me.bristermitten.backpacks.hook.PAPIHook
 import me.bristermitten.backpacks.persistence.BackpacksConfig
 import me.bristermitten.backpacks.persistence.BackpacksLoader
 import me.bristermitten.backpacks.persistence.FileBasedBackpacksLoader

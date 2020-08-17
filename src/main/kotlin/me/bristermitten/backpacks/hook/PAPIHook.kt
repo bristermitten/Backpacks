@@ -1,5 +1,6 @@
-package me.bristermitten.backpacks.lang
+package me.bristermitten.backpacks.hook
 
+import me.bristermitten.backpacks.lang.MessageFormatter
 import me.clip.placeholderapi.PlaceholderAPI
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
