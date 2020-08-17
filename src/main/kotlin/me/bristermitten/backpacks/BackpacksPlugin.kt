@@ -1,8 +1,9 @@
 package me.bristermitten.backpacks
 
 import co.aikar.commands.ConditionFailedException
+import co.aikar.commands.MessageType
 import co.aikar.commands.PaperCommandManager
-import com.charleskorn.kaml.Yaml
+import kotlinx.serialization.ExperimentalSerializationApi
 import me.bristermitten.backpacks.api.BackpackFormatter
 import me.bristermitten.backpacks.api.Backpacks
 import me.bristermitten.backpacks.commands.BackpacksCommand
@@ -10,10 +11,15 @@ import me.bristermitten.backpacks.entity.BackpackStore
 import me.bristermitten.backpacks.entity.format.SimpleBackpackFormatter
 import me.bristermitten.backpacks.event.BackpackPlaceListener
 import me.bristermitten.backpacks.event.ItemGainListener
+import me.bristermitten.backpacks.lang.LangService
+import me.bristermitten.backpacks.lang.MessageColorFormatter
+import me.bristermitten.backpacks.lang.MessageFormatter
+import me.bristermitten.backpacks.lang.PAPIHook
 import me.bristermitten.backpacks.persistence.BackpacksConfig
 import me.bristermitten.backpacks.persistence.BackpacksLoader
 import me.bristermitten.backpacks.persistence.FileBasedBackpacksLoader
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -21,55 +27,82 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class BackpacksPlugin : JavaPlugin()
 {
-    val backpacks: Backpacks = BackpackStore()
+	val backpacks: Backpacks = BackpackStore()
 
-    lateinit var backpacksLoader: BackpacksLoader
-    lateinit var backpacksConfig: BackpacksConfig
-    lateinit var backpackFormatter: BackpackFormatter
+	lateinit var backpacksLoader: BackpacksLoader
+	lateinit var backpacksConfig: BackpacksConfig
+	lateinit var backpackFormatter: BackpackFormatter
+	private lateinit var langService: LangService
 
-    override fun onEnable()
-    {
-        val backpacksDirectory = dataFolder.resolve("backpacks")
-        backpacksDirectory.mkdirs()
+	@ExperimentalSerializationApi
+	override fun onEnable()
+	{
+		val backpacksDirectory = dataFolder.resolve("backpacks")
+		backpacksDirectory.mkdirs()
 
-        backpacksLoader = FileBasedBackpacksLoader(backpacks, backpacksDirectory)
-        backpacksLoader.load()
+		backpacksLoader = FileBasedBackpacksLoader(backpacks, backpacksDirectory)
+		backpacksLoader.load()
+		logger.info("Loaded ${backpacks.all.size} backpacks")
 
-        val configFile = dataFolder.resolve("config.yml")
-        if (!configFile.exists())
-        {
-            saveResource("config.yml", false)
-        }
-        backpacksConfig = Yaml.default.parse(BackpacksConfig.serializer(), configFile.readText())
-        backpackFormatter = SimpleBackpackFormatter(backpacksConfig.itemFormat)
+		saveDefaultConfig()
 
-        registerCommands()
-        registerEvents()
-    }
+		backpacksConfig = BackpacksConfig.load(config)
+		backpackFormatter = SimpleBackpackFormatter(backpacksConfig.itemFormat)
 
-    private fun registerEvents()
-    {
-        val pluginManager = Bukkit.getPluginManager()
-        pluginManager.registerEvents(BackpackPlaceListener(), this)
-        pluginManager.registerEvents(ItemGainListener(backpackFormatter, backpacks), this)
-    }
+		loadLang()
+		registerCommands()
+		registerEvents()
+	}
 
-    private fun registerCommands()
-    {
-        val commandManager = PaperCommandManager(this)
-        @Suppress("DEPRECATION")
-        commandManager.enableUnstableAPI("help")
-        commandManager.commandConditions.addCondition(Int::class.java, "unsigned") { _, _, value ->
-            if (value < 0)
-            {
-                throw ConditionFailedException("Value must be more than 0!")
-            }
-        }
-        commandManager.registerCommand(BackpacksCommand(backpacks, backpackFormatter))
-    }
+	private fun loadLang()
+	{
+		val langFileName = "lang.yml"
+		val langFile = dataFolder.resolve(langFileName)
+		if (!langFile.exists())
+		{
+			saveResource(langFileName, false)
+		}
+		val hooks = loadHooks()
+		langService = LangService(langFile, hooks)
+	}
 
-    override fun onDisable()
-    {
-        backpacksLoader.save()
-    }
+	private fun loadHooks(): List<MessageFormatter>
+	{
+		val hooks = mutableListOf<MessageFormatter>(MessageColorFormatter())
+		if (server.pluginManager.isPluginEnabled("PlaceholderAPI"))
+		{
+			hooks += PAPIHook()
+			logger.info("Successfully hooked into PAPI!")
+		}
+		return hooks
+	}
+
+	private fun registerEvents()
+	{
+		val pluginManager = Bukkit.getPluginManager()
+		pluginManager.registerEvents(BackpackPlaceListener(), this)
+		pluginManager.registerEvents(ItemGainListener(backpackFormatter, backpacks), this)
+	}
+
+	private fun registerCommands()
+	{
+		val commandManager = PaperCommandManager(this)
+		commandManager.setFormat(MessageType.HELP, ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE, ChatColor.GREEN)
+
+		@Suppress("DEPRECATION")
+		commandManager.enableUnstableAPI("help")
+		commandManager.commandConditions.addCondition(Integer::class.java, "unsigned") { _, _, value ->
+			if (value < 0)
+			{
+				throw ConditionFailedException("Value must be more than 0!")
+			}
+		}
+
+		commandManager.registerCommand(BackpacksCommand(backpacks, backpackFormatter, langService))
+	}
+
+	override fun onDisable()
+	{
+		backpacksLoader.save()
+	}
 }

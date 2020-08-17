@@ -1,6 +1,11 @@
 package me.bristermitten.backpacks.persistence
 
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
 /**
@@ -8,18 +13,18 @@ import java.util.*
  *
  * The [UUID] is encoded as its String representation.
  */
-@Serializer(forClass = UUID::class)
 object UUIDSerializer : KSerializer<UUID>
 {
-    override val descriptor = PrimitiveDescriptor("UUID", PrimitiveKind.STRING)
+	override val descriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: UUID)
-    {
-        encoder.encodeString(value.toString())
-    }
+	override fun serialize(encoder: Encoder, value: UUID)
+	{
+		encoder.encodeString(value.toString())
+	}
 
-    override fun deserialize(decoder: Decoder): UUID
-    {
-        return UUID.fromString(decoder.decodeString())
-    }
+	override fun deserialize(decoder: Decoder): UUID
+	{
+		return UUID.fromString(decoder.decodeString())
+	}
+
 }

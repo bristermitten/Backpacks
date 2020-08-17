@@ -9,9 +9,8 @@ import org.bukkit.inventory.ItemStack
  * This is deserialized from config.yml and has placeholders applied in [SimpleBackpackFormatter]
  * to make a Backpack item.
  */
-@Serializable
 data class ItemFormat(
-        val type: Material = Material.STONE,
+        val type: Material,
         val name: String? = null,
         val lore: List<String> = emptyList()
 )

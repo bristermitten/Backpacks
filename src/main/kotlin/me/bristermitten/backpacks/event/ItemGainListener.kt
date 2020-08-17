@@ -36,7 +36,7 @@ class ItemGainListener(
         val drops = block.getDrops(player.inventory.itemInMainHand, player)
         if (drops.isEmpty()) return
 
-        backpack.addItems(*drops.toTypedArray())
+        backpack.addItems(drops.toList())
         inventory.setItem(backpackSlot, backpackFormatter.updateItem(backpack, backpackItem))
 
         isCancelled = true

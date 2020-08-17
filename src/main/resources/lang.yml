@@ -1,0 +1,3 @@
+not-a-backpack: "&c&cThis item is not a backpack!"
+size-set: "&aSize set to {size}!"
+backpack-given: "&aBackpack Given to {player}!"

@@ -1,8 +1,7 @@
 package me.bristermitten.backpacks.persistence
 
-import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.cbor.Cbor
-import kotlinx.serialization.json.Json
 import me.bristermitten.backpacks.api.Backpack
 import me.bristermitten.backpacks.api.Backpacks
 import me.bristermitten.backpacks.entity.BackpackEntity
@@ -15,53 +14,51 @@ import java.util.zip.GZIPOutputStream
  *
  * This uses [Cbor] combined with GZIP for concise data storage.
  */
+@ExperimentalSerializationApi
 class FileBasedBackpacksLoader(
-        private val backpacks: Backpacks,
-        private val backpacksDirectory: File
+		private val backpacks: Backpacks,
+		private val backpacksDirectory: File
 ) : BackpacksLoader
 {
-    private val cbor = Cbor
+	private val cbor = Cbor
 
-    @ImplicitReflectionSerializer
-    override fun load()
-    {
-        val files = backpacksDirectory.listFiles() ?: return
 
-        val backpackSet = files
-                .map {
-                    loadBackpack(it)
-                }.toSet()
+	override fun load()
+	{
+		val files = backpacksDirectory.listFiles() ?: return
 
-        backpacks.load(backpackSet)
-    }
+		val backpackSet = files
+				.map {
+					loadBackpack(it)
+				}.toSet()
 
-    @ImplicitReflectionSerializer
-    override fun save()
-    {
-        backpacks.all.mapNotNull {
-            it as? BackpackEntity?
-        }.forEach {
-            val file = backpacksDirectory.resolve(it.uuid.toString())
-            file.createNewFile()
-            saveBackpack(file, it)
-        }
-    }
+		backpacks.load(backpackSet)
+	}
 
-    @ImplicitReflectionSerializer
-    private fun loadBackpack(file: File): Backpack
-    {
-        val input = GZIPInputStream(file.inputStream())
-        val cborContent = input.use { it.readBytes() }
-        return cbor.load(BackpackEntity.serializer(), cborContent)
-    }
 
-    @ImplicitReflectionSerializer
-    private fun saveBackpack(file: File, backpack: BackpackEntity)
-    {
-        val output = GZIPOutputStream(file.outputStream())
-        output.use {
-            val bytes = cbor.dump(BackpackEntity.serializer(), backpack)
-            it.write(bytes)
-        }
-    }
+	override fun save()
+	{
+		backpacks.all.filterIsInstance<BackpackEntity>().forEach {
+			val file = backpacksDirectory.resolve(it.uuid.toString())
+			file.createNewFile()
+			saveBackpack(file, it)
+		}
+	}
+
+	private fun loadBackpack(file: File): Backpack
+	{
+		val input = GZIPInputStream(file.inputStream())
+		val cborContent = input.use(GZIPInputStream::readBytes)
+		return cbor.decodeFromByteArray(BackpackEntity.serializer(), cborContent)
+	}
+
+	private fun saveBackpack(file: File, backpack: BackpackEntity)
+	{
+		val output = GZIPOutputStream(file.outputStream())
+		output.use {
+			val bytes = cbor.encodeToByteArray(BackpackEntity.serializer(), backpack)
+			it.write(bytes)
+		}
+	}
+
 }
