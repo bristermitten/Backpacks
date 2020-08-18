@@ -27,8 +27,7 @@ class FileBasedBackpacksLoader(
 	{
 		val files = backpacksDirectory.listFiles() ?: return
 
-		val backpackSet = files
-				.map {
+		val backpackSet = files.map {
 					loadBackpack(it)
 				}.toSet()
 

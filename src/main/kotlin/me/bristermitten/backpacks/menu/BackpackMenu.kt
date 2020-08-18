@@ -11,9 +11,9 @@ class BackpackMenu(val backpack: Backpack)
 {
 	init
 	{
-		paginatedGui(JavaPlugin.getPlugin(BackpacksPlugin::class.java), 3, "Backpack") {
-			buildItem(Material.STONE) {
-
+		paginatedGui(JavaPlugin.getPlugin(BackpacksPlugin::class.java), 6, "Backpack") {
+			backpack.items.flatMap {
+				var amount = it.amount
 			}
 		}
 	}
